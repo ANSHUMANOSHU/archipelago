@@ -1,0 +1,61 @@
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["mcp_servers/edgar_server/tests"]
+pythonpath = ["mcp_servers/edgar_server"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+
+[tool.coverage.run]
+source = ["mcp_servers/edgar_server/tools"]
+omit = [
+    "*/tests/*",
+    "*/test_*.py",
+    "*/__pycache__/*",
+]
+
+[tool.coverage.report]
+precision = 2
+show_missing = true
+skip_covered = false
+
+[project]
+name = "mercor-rls-edgar"
+version = "0.1.0"
+description = "Mercor RLS Edgar SEC MCP Server"
+readme = "README.md"
+requires-python = ">=3.13,<3.14"
+dependencies = [
+    "fastmcp>=3.2.0",
+    "httpx>=0.27.0",
+    "loguru>=0.7.3",
+    "pydantic>=2.0.0",
+]
+
+[dependency-groups]
+dev = [
+    "basedpyright>=1.31.6",
+    "ruff>=0.14.0",
+    "pytest>=8.3.0",
+    "pytest-asyncio>=0.24.0",
+    "pytest-cov>=6.0.0",
+]
+
+[tool.basedpyright]
+typeCheckingMode = "recommended"
+reportUnusedCallResult = "none"
+failOnWarnings = false
+exclude = ["scripts", "packages", "tests", "modal_labs.py", "modal_helpers.py", ".venv", ".git", ".tmp", "venv", "mcp_servers", "smoke_test"]
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "F",   # pyflakes
+    "W",   # pycodestyle warnings
+    "I",   # isort
+    "B",   # flake8-bugbear
+    "UP",  # pyupgrade
+]
+
+ignore = [
+    "E501",  # Line too long
+]

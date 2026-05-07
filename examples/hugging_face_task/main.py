@@ -220,7 +220,25 @@ def main():
     log("Configuring MCP servers...")
     with open(EXAMPLE_DIR / "mcp_config_all_oss_servers.json") as f:
         mcp_config = json.load(f)
-    log(f"  Servers: {list(mcp_config['mcpServers'].keys())}")
+    
+    configured_servers = set(mcp_config['mcpServers'].keys())
+    required_servers = set(world.get("apps", []))
+    
+    log(f"  Available servers: {sorted(configured_servers)}")
+    log(f"  Required servers: {sorted(required_servers)}")
+    
+    # Check for missing servers
+    missing_servers = required_servers - configured_servers
+    if missing_servers:
+        log(f"  WARNING: World requires servers not in config: {sorted(missing_servers)}")
+        log(f"  These servers will not be available to the agent")
+    
+    # Check for stub implementations
+    stub_servers = {"edgar_server", "fmp_server"}
+    used_stubs = stub_servers & required_servers
+    if used_stubs:
+        log(f"  NOTE: Using stub implementations for: {sorted(used_stubs)}")
+        log(f"  These servers provide mock data for development/testing")
 
     resp = httpx.post(f"{ENV_URL}/apps", json=mcp_config, timeout=600.0)
     resp.raise_for_status()

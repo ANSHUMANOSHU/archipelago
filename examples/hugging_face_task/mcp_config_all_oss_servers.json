@@ -127,6 +127,32 @@
         "APP_DOCS_ROOT": "/filesystem",
         "MCP_TRANSPORT": "stdio"
       }
+    },
+    "edgar_server": {
+      "transport": "stdio",
+      "command": "uv",
+      "args": [
+        "run",
+        "python",
+        "main.py"
+      ],
+      "cwd": "/app/mcp_servers/edgar/mcp_servers/edgar_server",
+      "env": {
+        "MCP_TRANSPORT": "stdio"
+      }
+    },
+    "fmp_server": {
+      "transport": "stdio",
+      "command": "uv",
+      "args": [
+        "run",
+        "python",
+        "main.py"
+      ],
+      "cwd": "/app/mcp_servers/fmp/mcp_servers/fmp_server",
+      "env": {
+        "MCP_TRANSPORT": "stdio"
+      }
     }
   }
 }
