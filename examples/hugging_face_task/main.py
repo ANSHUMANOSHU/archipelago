@@ -233,9 +233,9 @@ def main():
         log(f"  WARNING: World requires servers not in config: {sorted(missing_servers)}")
         log(f"  These servers will not be available to the agent")
     
-    # Check for stub implementations
+    # Check for stub implementations (only if both required and configured)
     stub_servers = {"edgar_server", "fmp_server"}
-    used_stubs = stub_servers & required_servers
+    used_stubs = stub_servers & required_servers & configured_servers
     if used_stubs:
         log(f"  NOTE: Using stub implementations for: {sorted(used_stubs)}")
         log(f"  These servers provide mock data for development/testing")
